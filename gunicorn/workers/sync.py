@@ -144,13 +144,6 @@ class SyncWorker(base.Worker):
             else:
                 self.log.debug("Error processing SSL request.")
                 self.handle_error(req, client, addr, e)
-        except OSError as e:
-            if e.errno == 0:
-                self.log.debug("ssl connection closed")
-                client.close()
-            else:
-                self.log.debug("Error processing SSL request.")
-                self.handle_error(req, client, addr, e)
         except EnvironmentError as e:
             if e.errno not in (errno.EPIPE, errno.ECONNRESET):
                 self.log.exception("Socket error processing request.")
